@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Convite Especial</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #ffe6f0;
+        overflow: hidden;
+    }
+
+    .container {
+        margin-top: 100px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 18px;
+        margin: 15px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+    }
+
+    #sim {
+        background-color: #ff4da6;
+        color: white;
+    }
+
+    #nao {
+        background-color: #999;
+        color: white;
+        position: absolute;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Gostaria de se encontrar comigo às 20:00 hoje, sem compromisso? </h1>
+    <button id="sim">Sim</button>
+    <button id="nao">Não</button>
+</div>
+
+<script>
+let tentativas = 0;
+let naoBtn = document.getElementById("nao");
+
+naoBtn.addEventListener("mouseover", function() {
+    if (tentativas < 7) {
+        let largura = window.innerWidth - 100;
+        let altura = window.innerHeight - 100;
+        naoBtn.style.left = Math.random() * largura + "px";
+        naoBtn.style.top = Math.random() * altura + "px";
+        tentativas++;
+    }
+});
+
+naoBtn.addEventListener("click", function() {
+    tentativas++;
+
+    if (tentativas >= 8 && tentativas < 10) {
+        naoBtn.innerText = "Tenho certeza que não";
+    }
+
+    if (tentativas >= 10) {
+        window.location.href = "nao.html";
+    }
+});
+
+document.getElementById("sim").addEventListener("click", function() {
+    window.location.href = "sim.html";
+});
+</script>
+
+</body>
+</html>
