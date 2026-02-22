@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Convite para jantar e conversa</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ffe6f0, #ffd6eb);
+    overflow: hidden;
+}
+
+.container { margin-top: 100px; }
+h1 { font-size: 26px; transition: 0.3s; padding: 0 20px; }
+button {
+    padding: 12px 25px; font-size: 18px; margin: 15px;
+    cursor: pointer; border-radius: 8px; border: none; transition: 0.2s;
+}
+#sim { background-color: #ff4da6; color: white; }
+#sim:hover { transform: scale(1.1); }
+#nao { background-color: #555; color: white; position: absolute; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1 id="pergunta">Gostaria de se encontrar comigo às 20:00 hoje, sem compromisso? ✨</h1>
+<button id="sim">Sim</button>
+<button id="nao">Não</button>
+</div>
+
+<audio id="musica" loop>
+    <source src="better-together.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let tentativas = 0;
+let faseFinal = false;
+const naoBtn = document.getElementById("nao");
+const musica = document.getElementById("musica");
+
+// Função para fazer o botão "Não" fugir
+function moverBotao() {
+    const largura = window.innerWidth - 120;
+    const altura = window.innerHeight - 80;
+    naoBtn.style.left = Math.random() * largura + "px";
+    naoBtn.style.top = Math.random() * altura + "px";
+}
+
+naoBtn.addEventListener("mouseover", function() {
+    tentativas++;
+    if (!faseFinal) {
+        if (tentativas <= 15) moverBotao();
+        if (tentativas === 16) {
+            faseFinal = true;
+            naoBtn.innerText = "Tenho certeza que não";
+        }
+    } else {
+        if (tentativas <= 19) moverBotao();
+    }
+});
+
+// Clicar no "Não" final
+naoBtn.addEventListener("click", function() {
+    if (faseFinal && tentativas >= 19) {
+        musica.pause();
+        window.location.href = "nao.html";
+    }
+});
+
+// Clicar no "Sim"
+document.getElementById("sim").addEventListener("click", function() {
+    // Inicia a música quando clicar
+    musica.play().catch(() => {
+        console.log("A música não pode tocar automaticamente.");
+    });
+    window.location.href = "sim.html";
+});
+
+// Para permitir tocar música se a pessoa tocar na tela
+document.body.addEventListener("click", () => {
+    musica.play().catch(()=>{});
+}, { once: true });
+</script>
+
+</body>
+</html>
